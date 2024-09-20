@@ -153,4 +153,9 @@ public class Shader {
         GL20.glUniform3f(GL20.glGetUniformLocation(ID, name), x, y, z);
     }
 
+
+    public void setMat4(String name, float[] value) {
+        GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(ID, name), false, value);
+    }
+
 }

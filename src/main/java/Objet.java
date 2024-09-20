@@ -1,3 +1,6 @@
+import org.joml.Matrix2d;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.*;
 import org.lwjgl.stb.STBImage;
@@ -97,8 +100,8 @@ public class Objet {
             GL20.glVertexAttribPointer(1, 3, GL_FLOAT, false, vSize * Float.BYTES, 3 * Float.BYTES); // Interprétation des données
             GL20.glEnableVertexAttribArray(1); // Activation de l'attribut
         }
+        // texture
         if (vSize > 6) {
-            // normale
             GL20.glVertexAttribPointer(2, 2, GL_FLOAT, false, vSize * Float.BYTES, 6 * Float.BYTES); // Interprétation des données
             GL20.glEnableVertexAttribArray(2); // Activation de l'attribut
         }
@@ -142,9 +145,25 @@ public class Objet {
             GL30.glActiveTexture(GL30.GL_TEXTURE1); // Activer la texture 1
             GL30.glBindTexture(GL30.GL_TEXTURE_2D, texture2); // Binding de la texture
             // TEST
-            // set un uniform vec3
             rb(shader);
         }
+        // Rotation
+        // Créer une matrice identité (comme matrice de transformation)
+        Matrix4f transform = new Matrix4f().identity();
+        // appliquer la translation
+        transform.translate(new Vector3f(0.5f, -0.5f, 0.0f));
+        // appliquer la rotation (uniquement sur l'axe Z)
+        transform.rotate((float) GLFW.glfwGetTime(), new Vector3f(0.0f, 0.0f, 1.0f));
+        // appliquer la mise à l'échelle uniforme de 0.5
+        transform.scale(0.5f);
+        // Convertion de la matrice en tableau de float
+        float [] transformArray = new float[16];
+        transform.get(transformArray); // Conversion de la matrice
+        // Alteration de la variable uniforme
+        shader.setMat4("transform", transformArray); // Passage de la matrice
+
+
+
         GL30.glBindVertexArray(VAO); // Binding du VAO
         GL11.glDrawElements(GL11.GL_TRIANGLES, IC, GL11.GL_UNSIGNED_INT, 0); // Dessin
     }
@@ -190,7 +209,7 @@ public class Objet {
         // 0 pour indiquer que l'image est chargée tel quel
         ByteBuffer image = STBImage.stbi_load(TEXTURE_PATH + file, w, h, comp, 4);
         if (image == null) {
-            throw new RuntimeException("Impossible de charger l'image " + file);
+            throw new RuntimeException("ERREUR: (Objet) Impossible de charger l'image " + file);
         }
         // Stockage de l'image
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, w.get(), h.get(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, image);
@@ -216,5 +235,7 @@ public class Objet {
         // Récupération de l'emplacement de la variable uniforme
         shader.setVec3("rainbow", redValue, greenValue, blueValue); // Passage de la couleur
     }
+
+
 
 }

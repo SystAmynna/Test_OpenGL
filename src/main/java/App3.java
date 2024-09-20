@@ -161,7 +161,7 @@ public class App3 extends Thread{
             0, 1, 2 // Triangle
         };
         // Création de l'objet triangle
-        triangle = new Objet(vertices, indices,6, shader);
+        triangle = new Objet(vertices, indices,6);
 
         // RECTANGLE
         // Définition des vertices
@@ -180,7 +180,7 @@ public class App3 extends Thread{
             1, 2, 3  // Triangle 2
         };
         // Création de l'objet triangle
-        rectangle = new Objet(vertices2, indices2, 8, shader);
+        rectangle = new Objet(vertices2, indices2, 8);
         rectangle.createTexture("wood.png");
         rectangle.createTexture2("wall.png");
 
@@ -204,7 +204,7 @@ public class App3 extends Thread{
             3, 4, 5 // Triangle 4
         };
         // Création de l'objet hexagone
-        hexagone = new Objet(vertices3, indices3, 6, shader);
+        hexagone = new Objet(vertices3, indices3, 6);
 
     }
 

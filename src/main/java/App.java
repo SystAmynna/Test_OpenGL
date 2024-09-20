@@ -104,11 +104,8 @@ public abstract class App extends Thread {
             GL11.glViewport(0, 0, width, height);
         });
 
-        // Initialisation des shaders
-        iniShaders();
-
-        // Initialisation des objets
-        iniObjects();
+        // Initialisation spécifique à l'app
+        ini();
 
         // Configurer le blending, afin de gérer les pixels transparent (alpha)
         GL11.glEnable(GL11.GL_BLEND); // Activer le blending
@@ -121,15 +118,12 @@ public abstract class App extends Thread {
         GLFW.glfwShowWindow(window);
     }
 
-    /**
-     * Méthode d'initialisation des shaders
-     */
-     protected abstract void iniShaders();
+
 
     /**
-     * Méthode d'initialisation des objets
+     * Méthode d'initialisation spécifique à l'app.
      */
-    protected abstract void iniObjects();
+    protected abstract void ini();
 
     /**
      * Méthode de fin du programme.
