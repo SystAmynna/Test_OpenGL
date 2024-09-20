@@ -1,18 +1,9 @@
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
-import org.lwjgl.stb.STBImage;
-import org.lwjgl.system.MemoryStack;
-
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
-import static org.lwjgl.opengl.GL11.GL_FLOAT;
-import static org.lwjgl.opengl.GL20.glCreateShader;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**

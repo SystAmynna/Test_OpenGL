@@ -58,7 +58,7 @@ public class Objet {
      * @param indices Tableau d'entiers contenant les indices des sommets.
      * @param vSize Taille des données d'un sommet (dans vertices).
      */
-    public Objet(float [] vertices, int [] indices, int vSize, Shader shader) {
+    public Objet(float [] vertices, int [] indices, int vSize) {
         assert indices != null;
         // Création du EBO
         EBO = GL15.glGenBuffers();

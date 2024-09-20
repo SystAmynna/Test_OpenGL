@@ -2,11 +2,17 @@ import org.lwjgl.opengl.GL20;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.ArrayList;
 
 /**
  * Classe de gestion des Shaders.
  */
 public class Shader {
+
+    /**
+     * Liste des shaders.
+     */
+    public static final ArrayList<Shader> SHADERS = new ArrayList<>();
 
     /**
      * Shader courant.
@@ -77,6 +83,9 @@ public class Shader {
         // Suppression des shaders
         GL20.glDeleteShader(vertexShader);
         GL20.glDeleteShader(fragmentShader);
+
+        // ajout à la liste des shaders
+        SHADERS.add(this);
     }
 
     /**
@@ -93,6 +102,14 @@ public class Shader {
      */
     public static void stop() {
         GL20.glUseProgram(0);
+    }
+
+    /**
+     * Méthode pour supprimer le shader.
+     */
+    public void delete() {
+        SHADERS.remove(this);
+        GL20.glDeleteProgram(ID);
     }
 
 
