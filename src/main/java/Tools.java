@@ -19,4 +19,6 @@ public class Tools {
         return (float) (degree * Math.PI / 180);
     }
 
+    // Ont des équivalant dans Math (Java)
+
 }

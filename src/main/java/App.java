@@ -104,12 +104,16 @@ public abstract class App extends Thread {
             GL11.glViewport(0, 0, width, height);
         });
 
-        // Initialisation spécifique à l'app
-        ini();
-
         // Configurer le blending, afin de gérer les pixels transparent (alpha)
         GL11.glEnable(GL11.GL_BLEND); // Activer le blending
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA); // Configurer la fonction de blending
+
+        GL11.glEnable(GL11.GL_DEPTH_TEST); // Activer le test de profondeur
+
+
+
+        // Initialisation spécifique à l'app
+        ini();
 
         // Activer le swap des buffers
         GLFW.glfwSwapInterval(1);
@@ -131,7 +135,7 @@ public abstract class App extends Thread {
      */
     private final void end() {
         // Libération des ressources
-        for (Shader shader : Shader.SHADERS) {
+        if (!Shader.SHADERS.isEmpty()) for (Shader shader : Shader.SHADERS) {
             shader.delete();
         }
         // Libération des ressources de la fenêtre
@@ -150,7 +154,7 @@ public abstract class App extends Thread {
         while (!GLFW.glfwWindowShouldClose(window)) {
             // EFFACER LE BUFFER
             GL11.glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // Couleur de fond
-            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT); // Effacer le buffer de couleur
+            GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT); // Effacer le buffer de couleur
 
             // Gestion des contrôles
             processInput();

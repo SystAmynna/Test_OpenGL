@@ -132,8 +132,7 @@ public class Objet {
      * Dessine l'objet.
      */
     public void draw(Shader shader) {
-        // utiliser le shader
-        shader.use();
+
         // dessiner
         if (texture1 != -1 && texture2 != -1) {
             // Definir les textures à utiliser dans l'uniform
@@ -147,26 +146,40 @@ public class Objet {
             // TEST
             rb(shader);
         }
-        // Rotation
-        // Créer une matrice identité (comme matrice de transformation)
-        Matrix4f transform = new Matrix4f().identity();
-        // appliquer la translation
-        transform.translate(new Vector3f(0.5f, -0.5f, 0.0f));
-        // appliquer la rotation (uniquement sur l'axe Z)
-        transform.rotate((float) GLFW.glfwGetTime(), new Vector3f(0.0f, 0.0f, 1.0f));
-        // appliquer la mise à l'échelle uniforme de 0.5
-        transform.scale(0.5f);
-        // Convertion de la matrice en tableau de float
-        float [] transformArray = new float[16];
-        transform.get(transformArray); // Conversion de la matrice
-        // Alteration de la variable uniforme
-        shader.setMat4("transform", transformArray); // Passage de la matrice
+        // utiliser le shader
+        shader.use();
 
+        processMatrix(shader); // Matrices de transformation
 
-
-        GL30.glBindVertexArray(VAO); // Binding du VAO
-        GL11.glDrawElements(GL11.GL_TRIANGLES, IC, GL11.GL_UNSIGNED_INT, 0); // Dessin
+        _draw(VAO, IC); // Dessin
     }
+
+    private void _draw(int VAO, int IC) {
+        GL30.glBindVertexArray(VAO); // Binding du VAO
+        //GL11.glDrawElements(GL11.GL_TRIANGLES, IC, GL11.GL_UNSIGNED_INT, 0); // Dessin
+        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 36); // Dessin
+    }
+
+    /**
+     * Méthode qui traite les matrices de transformation
+     */
+    private void processMatrix(Shader shader) {
+
+        Matrix4f model = new Matrix4f().identity();
+        Matrix4f view = new Matrix4f().identity();
+        Matrix4f projection = new Matrix4f().identity();
+
+        model.rotate((float) GLFW.glfwGetTime(), new Vector3f(0.5f, 1.0f, 0.0f));
+        view.translate(new Vector3f(0.0f, 0.0f, -3.0f));
+        projection.perspective((float) Math.toRadians(45.0f), 1600.0f / 1200.0f, 0.1f, 100.0f);
+
+        shader.setMat4("model", model.get(new float[16]));
+        shader.setMat4("view", view.get(new float[16]));
+        shader.setMat4("projection", projection.get(new float[16]));
+
+
+    }
+
 
     /**
      * Dessine l'objet en mode fil de fer.
@@ -182,7 +195,7 @@ public class Objet {
      * @param file Nom du fichier de la texture
      * @return Identifiant de la texture
      */
-    private int loadTexture(String file, boolean flip) {
+    public static int loadTexture(String file, boolean flip) {
         // Chemin des textures
         final String TEXTURE_PATH = "src/main/resources/textures/";
         // Génération de la texture
