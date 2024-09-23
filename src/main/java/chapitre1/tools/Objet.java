@@ -139,6 +139,9 @@ public class Objet {
      */
     public void draw(Shader shader) {
 
+        // utiliser le shader
+        shader.use();
+
         // dessiner
         if (texture1 != -1 && texture2 != -1) {
             // Definir les textures à utiliser dans l'uniform
@@ -152,8 +155,7 @@ public class Objet {
             // TEST
             rb(shader);
         }
-        // utiliser le shader
-        shader.use();
+
 
         //processMatrix(shader); // Matrices de transformation
 
@@ -162,8 +164,8 @@ public class Objet {
 
     private void _draw(int VAO, int IC) {
         GL30.glBindVertexArray(VAO); // Binding du VAO
-        //GL11.glDrawElements(GL11.GL_TRIANGLES, IC, GL11.GL_UNSIGNED_INT, 0); // Dessin
-        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 36); // Dessin
+        GL11.glDrawElements(GL11.GL_TRIANGLES, IC, GL11.GL_UNSIGNED_INT, 0); // Dessin
+        //GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 36); // Dessin
     }
 
     /**
