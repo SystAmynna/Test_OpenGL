@@ -1,3 +1,7 @@
+package chapitre1;
+
+import chapitre1.tools.Objet;
+import chapitre1.tools.Shader;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
@@ -7,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
- * Classe App3.
+ * Classe chapitre1.App3.
  * Utilisation des shaders.
  */
 public class App3 extends Thread{
@@ -54,7 +58,7 @@ public class App3 extends Thread{
     private Objet hexagone;
 
     /**
-     * Constructeur de la classe App3.
+     * Constructeur de la classe chapitre1.App3.
      * Start la classe
      */
     public App3() {

@@ -1,3 +1,5 @@
+package chapitre1.tools;
+
 import org.lwjgl.opengl.GL20;
 
 import java.io.File;
@@ -15,7 +17,12 @@ public class Shader {
     public static final ArrayList<Shader> SHADERS = new ArrayList<>();
 
     /**
-     * Shader courant.
+     * Chemin vers les shaders.
+     */
+    private static String path = "src/main/resources/chapitre1/shaders/";
+
+    /**
+     * chapitre1.tools.Shader courant.
      */
     private static Shader currentShader;
 
@@ -25,13 +32,12 @@ public class Shader {
     public final int ID;
 
     /**
-     * Constructeur de la classe Shader.
+     * Constructeur de la classe chapitre1.tools.Shader.
      */
     public Shader(String vertex, String fragment) {
-        final String PATH = "src/main/resources/shaders/";
         // Initialisation des fichiers
-        File vertexFile = new File(PATH + vertex);
-        File fragmentFile = new File(PATH + fragment);
+        File vertexFile = new File(path + vertex);
+        File fragmentFile = new File(path + fragment);
         // Verifier l'existence des fichiers
         if (!vertexFile.exists() || !fragmentFile.exists()) {
             System.err.println("Erreur: Fichier introuvable.");
@@ -110,6 +116,13 @@ public class Shader {
     public void delete() {
         SHADERS.remove(this);
         GL20.glDeleteProgram(ID);
+    }
+
+    /**
+     * Setter du chemin des shaders.
+     */
+    public static void setPath(String path) {
+        Shader.path = path;
     }
 
 

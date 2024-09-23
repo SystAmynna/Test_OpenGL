@@ -1,3 +1,5 @@
+package chapitre1;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
@@ -12,7 +14,7 @@ import static org.lwjgl.opengl.GL20.glCreateShader;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
- * Classe App2.
+ * Classe chapitre1.App2.
  * Utilisation des shaders.
  */
 public class App2 extends Thread{
@@ -34,7 +36,7 @@ public class App2 extends Thread{
     /**
      * Adresse des fichiers Shaders
      */
-    private final String SHADERS_PATH = "src/main/resources/shaders/";
+    private final String SHADERS_PATH = "src/main/resources/chapitre1/shaders/";
     /**
      * Vertex shader
      */
@@ -55,7 +57,7 @@ public class App2 extends Thread{
     private int shaderProgram;
 
     /**
-     * Constructeur de la classe App2.
+     * Constructeur de la classe chapitre1.App2.
      * Start la classe
      */
     public App2() {

@@ -1,4 +1,5 @@
-import org.joml.Matrix2d;
+package chapitre1.tools;
+
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
@@ -12,7 +13,7 @@ import java.nio.IntBuffer;
 import static org.lwjgl.opengl.GL11.GL_FLOAT;
 
 /**
- * Classe Objet.
+ * Classe chapitre1.tools.Objet.
  * Cette classe désigne un objet dessinable.
  */
 public class Objet {
@@ -29,6 +30,11 @@ public class Objet {
      * vSize Coordonnées, couleur et Texture
      */
     public static final int VSIZE_COORD_COLOR_TEXTURE = 8;
+
+    /**
+     * Chemin des sprites
+     */
+    private static String TEXTURE_PATH = "src/main/resources/chapitre1/textures/";
 
     /**
      * VAO: Vertex Array Object.
@@ -118,7 +124,7 @@ public class Objet {
     }
 
     /**
-     * Destructeur de la classe Objet.
+     * Destructeur de la classe chapitre1.tools.Objet.
      */
     public void destroy() {
         GL30.glDeleteVertexArrays(VAO); // Suppression du VAO
@@ -149,7 +155,7 @@ public class Objet {
         // utiliser le shader
         shader.use();
 
-        processMatrix(shader); // Matrices de transformation
+        //processMatrix(shader); // Matrices de transformation
 
         _draw(VAO, IC); // Dessin
     }
@@ -196,8 +202,6 @@ public class Objet {
      * @return Identifiant de la texture
      */
     public static int loadTexture(String file, boolean flip) {
-        // Chemin des textures
-        final String TEXTURE_PATH = "src/main/resources/textures/";
         // Génération de la texture
         int texture = GL11.glGenTextures();
         // Binding de la texture
@@ -222,7 +226,7 @@ public class Objet {
         // 0 pour indiquer que l'image est chargée tel quel
         ByteBuffer image = STBImage.stbi_load(TEXTURE_PATH + file, w, h, comp, 4);
         if (image == null) {
-            throw new RuntimeException("ERREUR: (Objet) Impossible de charger l'image " + file);
+            throw new RuntimeException("ERREUR: (chapitre1.tools.Objet) Impossible de charger l'image " + file);
         }
         // Stockage de l'image
         GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, w.get(), h.get(), 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, image);
@@ -249,6 +253,12 @@ public class Objet {
         shader.setVec3("rainbow", redValue, greenValue, blueValue); // Passage de la couleur
     }
 
+    /**
+     * Redéfinir le chemin des textures
+     */
+    public static void setTexturePath(String path) {
+        TEXTURE_PATH = path;
+    }
 
 
 }

@@ -1,3 +1,5 @@
+package chapitre1;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.*;
@@ -10,7 +12,7 @@ import static org.lwjgl.opengl.GL20.glCreateShader;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
- * Classe App1.
+ * Classe chapitre1.App1.
  * Test de rendu à l'aide d'OpenGL.
  */
 public class App1 extends Thread{
@@ -30,7 +32,7 @@ public class App1 extends Thread{
     private int height = 1200;
 
     /**
-     * Vertex Shader Source
+     * Vertex chapitre1.tools.Shader Source
      */
     private final String vertexShaderSource = "#version 330 core\n" +
             "layout (location = 0) in vec3 aPos;\n" +
@@ -40,7 +42,7 @@ public class App1 extends Thread{
             "}\0";
 
     /**
-     * Fragment Shader Source
+     * Fragment chapitre1.tools.Shader Source
      */
     private final String fragmentShaderSource = "#version 330 core\n" +
             "out vec4 FragColor;\n" +
@@ -55,7 +57,7 @@ public class App1 extends Thread{
     private int shaderProgram;
 
     /**
-     * Constructeur de la classe App1
+     * Constructeur de la classe chapitre1.App1
      * Start la classe
      */
     public App1() {

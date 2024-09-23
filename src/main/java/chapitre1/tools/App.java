@@ -1,3 +1,5 @@
+package chapitre1.tools;
+
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -9,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 /**
- * Classe App.
+ * Classe chapitre1.tools.App.
  * Classe parente de toutes les applications.
  * Elle contient les méthodes et les attributs communs à toutes les applications.
  */
@@ -34,7 +36,7 @@ public abstract class App extends Thread {
     protected String title;
 
     /**
-     * Construteur de la classe App.
+     * Construteur de la classe chapitre1.tools.App.
      */
     public App(int width, int height, String title) {
         // Initialisation de la fenêtre
@@ -135,8 +137,8 @@ public abstract class App extends Thread {
      */
     private final void end() {
         // Libération des ressources
-        if (!Shader.SHADERS.isEmpty()) for (Shader shader : Shader.SHADERS) {
-            shader.delete();
+        if (!Shader.SHADERS.isEmpty()) for (int i = 0; i < Shader.SHADERS.size(); i++) {
+            Shader.SHADERS.get(i).delete();
         }
         // Libération des ressources de la fenêtre
         GLFW.glfwDestroyWindow(window);

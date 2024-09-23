@@ -1,3 +1,7 @@
+package chapitre1;
+
+import chapitre1.tools.Objet;
+import chapitre1.tools.Shader;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
@@ -7,11 +11,14 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 import java.util.Objects;
-import java.util.Vector;
 
 import static org.lwjgl.glfw.GLFW.glfwCreateWindow;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
+/**
+ * Classe AppCube.
+ * ou App4.5
+ */
 public class AppCube extends Thread{
 
     /**
@@ -33,12 +40,12 @@ public class AppCube extends Thread{
     protected String title;
 
     /**
-     * Shader
+     * chapitre1.tools.Shader
      */
     private Shader shader;
 
     /**
-     * Construteur de la classe App.
+     * Construteur de la classe chapitre1.tools.App.
      */
     public AppCube(int width, int height, String title) {
         // Initialisation de la fenêtre
@@ -132,9 +139,7 @@ public class AppCube extends Thread{
      */
     private final void end() {
         // Libération des ressources
-        if (!Shader.SHADERS.isEmpty()) for (Shader shader : Shader.SHADERS) {
-            shader.delete();
-        }
+        shader.delete();
         // Libération des ressources de la fenêtre
         GLFW.glfwDestroyWindow(window);
         // Libération des ressources de GLFW
@@ -241,7 +246,7 @@ public class AppCube extends Thread{
         GL30.glEnableVertexAttribArray(1);
 
 
-        texture1 = Objet.loadTexture("eca.png", false);
+        texture1 = Objet.loadTexture("wood2.png", false);
 
         shader = new Shader("shadCube.vsh", "shadCube.fsh");
         shader.use();
@@ -277,10 +282,10 @@ public class AppCube extends Thread{
         view = new Matrix4f();
 
 
-        float radius = 10.0f;
+        float radius = 6.0f;
         float camX = (float) Math.sin(GLFW.glfwGetTime()) * radius;
         float camZ = (float) Math.cos(GLFW.glfwGetTime()) * radius;
-        view = new Matrix4f().lookAt(new Vector3f(camX, 0.0f, camZ), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
+        view = new Matrix4f().lookAt(new Vector3f(camX, 3.0f, camZ), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
 
         shader.setMat4("model", model.get(new float[16]));
         shader.setMat4("view", view.get(new float[16]));
@@ -323,7 +328,7 @@ public class AppCube extends Thread{
 
 
     public static void main(String[] args) {
-       new AppCube(800, 600, "Cube");
+       new AppCube(1600, 1200, "Cube");
     }
 
 

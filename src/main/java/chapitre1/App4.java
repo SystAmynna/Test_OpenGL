@@ -1,13 +1,19 @@
+package chapitre1;
+
+import chapitre1.tools.App;
+import chapitre1.tools.Objet;
+import chapitre1.tools.Shader;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Classe App4.
+ * Classe chapitre1.App4.
  * Transformation de matrices, rotations.
  */
 public class App4 extends App {
 
     /**
-     * Shader
+     * chapitre1.tools.Shader
      */
     private Shader shader;
     /**
@@ -16,7 +22,7 @@ public class App4 extends App {
     private Shader wireShader;
 
     /**
-     * Objet Rectangle
+     * chapitre1.tools.Objet Rectangle
      */
     private Objet rectangle;
 
@@ -26,7 +32,7 @@ public class App4 extends App {
     private boolean debug;
 
     /**
-     * Construteur de la classe App.
+     * Construteur de la classe chapitre1.tools.App.
      *
      * @param width
      * @param height
@@ -38,7 +44,7 @@ public class App4 extends App {
 
 
     /**
-     * MÈthode d'initialisation.
+     * M√©thode d'initialisation.
      */
     @Override
     protected void ini() {
@@ -107,10 +113,12 @@ public class App4 extends App {
         rectangle = new Objet(vertices, indices, 8);
         rectangle.createTexture("eca.png");
 
+        System.err.println("CE CODE NE FONCTIONNE PAS... (et n'est pas sens√© fonctionner)");
+
     }
 
     /**
-     * MÈthode de gestion des entrÈes.
+     * M√©thode de gestion des entr√©es.
      */
     @Override
     protected void processInput() {
@@ -122,7 +130,7 @@ public class App4 extends App {
     }
 
     /**
-     * MÈthode de rendu.
+     * M√©thode de rendu.
      */
     @Override
     protected void render() {
@@ -134,11 +142,11 @@ public class App4 extends App {
     }
 
     /**
-     * MÈthode principale.
+     * M√©thode principale.
      * @param args
      */
     public static void main(String[] args) {
-        new App4(1600, 1200, "App 4");
+        new App4(1600, 1200, "chapitre1.tools.App 4");
 
     }
 
