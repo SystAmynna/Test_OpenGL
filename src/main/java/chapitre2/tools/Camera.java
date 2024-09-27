@@ -38,6 +38,10 @@ public class Camera {
         updateViewMatrix();
     }
 
+    public void setFirstMouse(boolean firstMouse) {
+        this.firstMouse = firstMouse;
+    }
+
     public void updateViewMatrix() {
         viewMatrix.identity();
         viewMatrix.lookAt(position, position.add(front, new Vector3f()), up);

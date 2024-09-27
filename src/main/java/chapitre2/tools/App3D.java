@@ -26,6 +26,8 @@ public abstract class App3D extends Thread {
 
     // CAMERA
     private Camera camera;
+    boolean outWin = false;
+    boolean outWinPressed = false;
 
     public App3D(String title, int width, int height) {
         super();
@@ -124,6 +126,10 @@ public abstract class App3D extends Thread {
         shader.setMat4f("view", view);
         // Callback du mouvement de la souris
         GLFW.glfwSetCursorPosCallback(window, (window, xpos, ypos) -> {
+            if (outWin) {
+                camera.setFirstMouse(true);
+                return;
+            }
             camera.processMouseMovement((float) xpos, (float) ypos);
             Matrix4f v = camera.getViewMatrix();
             Shader.getCurrentShader().setMat4f("view", v);
@@ -189,6 +195,21 @@ public abstract class App3D extends Thread {
     private void defaultProcessInput() {
         if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_ESCAPE) == GLFW.GLFW_PRESS) {
             GLFW.glfwSetWindowShouldClose(window, true);
+        }
+        // libère la souris ou la bloque
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_PRESS && !outWinPressed) {
+            outWinPressed = true;
+            if (outWin) {
+                GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_DISABLED);
+            } else {
+                GLFW.glfwSetInputMode(window, GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+                // Centrer la souris
+                GLFW.glfwSetCursorPos(window, width / 2.0, height / 2.0);
+            }
+            outWin = !outWin;
+        }
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_LEFT_CONTROL) == GLFW.GLFW_RELEASE) {
+            outWinPressed = false;
         }
         camera.processKeyboard(window, deltaTime);
     }

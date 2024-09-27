@@ -132,4 +132,8 @@ public class Mesh {
     public Vector3f getRotation() {
         return rotation;
     }
+
+    public Vector3f getScale() {
+        return scale;
+    }
 }
