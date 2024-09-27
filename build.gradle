@@ -48,6 +48,6 @@ shadowJar {
     archiveVersion.set('')
 
     manifest {
-        attributes 'Main-Class': 'AppCube'
+        attributes 'Main-Class': 'chapitre1.App5'
     }
 }

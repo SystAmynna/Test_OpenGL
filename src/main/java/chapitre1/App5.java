@@ -192,16 +192,19 @@ public class App5 extends App {
     @Override
     protected void render() {
 
+        // Gestion du temps
         float currentFrame = (float) GLFW.glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
 
+        // gestion texture
         GL30.glActiveTexture(texture1);
         GL30.glBindTexture(GL30.GL_TEXTURE_2D, texture1);
 
+        // utilisation du shader
         shader.use();
 
-
+        // MATRICES
         Matrix4f model = new Matrix4f();
         Matrix4f projection = new Matrix4f();
 
@@ -210,10 +213,12 @@ public class App5 extends App {
         view = new Matrix4f();
         view = new Matrix4f().lookAt(cameraPos, cameraPos.add(cameraFront, new Vector3f()), cameraUp);
 
-        shader.setMat4("model", model.get(new float[16]));
-        shader.setMat4("view", view.get(new float[16]));
-        shader.setMat4("projection", projection.get(new float[16]));
+        shader.setMat4f("model", model.get(new float[16]));
+        shader.setMat4f("view", view.get(new float[16]));
+        shader.setMat4f("projection", projection.get(new float[16]));
 
+
+        // dessin
         GL30.glBindVertexArray(VAO);
 
         Vector3f [] cubePositions = {
@@ -236,9 +241,9 @@ public class App5 extends App {
 
             float [] vect = {1.0f, 0.3f, 0.5f};
             float length = (float) Math.sqrt(vect[0] * vect[0] + vect[1] * vect[1] + vect[2] * vect[2]);
-            model.rotate((float) (GLFW.glfwGetTime() * Math.toRadians(angle)), vect[0] / length, vect[1] / length, vect[2] / length);
+            model.rotate((float) (GLFW.glfwGetTime() + Math.toRadians(angle)), vect[0] / length, vect[1] / length, vect[2] / length);
 
-            shader.setMat4("model", model.get(new float[16]));
+            shader.setMat4f("model", model.get(new float[16]));
             GL30.glDrawArrays(GL30.GL_TRIANGLES, 0, 36);
         }
 

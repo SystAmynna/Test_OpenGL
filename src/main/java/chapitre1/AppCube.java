@@ -263,7 +263,7 @@ public class AppCube extends Thread{
 
         Matrix4f projection = new Matrix4f();
         projection.perspective((float) Math.toRadians(45.0f), (float) width / (float) height, 0.1f, 100.0f);
-        shader.setMat4("projection", projection.get(new float[16]));
+        shader.setMat4f("projection", projection.get(new float[16]));
 
     }
 
@@ -287,8 +287,8 @@ public class AppCube extends Thread{
         float camZ = (float) Math.cos(GLFW.glfwGetTime()) * radius;
         view = new Matrix4f().lookAt(new Vector3f(camX, 3.0f, camZ), new Vector3f(0.0f, 0.0f, 0.0f), new Vector3f(0.0f, 1.0f, 0.0f));
 
-        shader.setMat4("model", model.get(new float[16]));
-        shader.setMat4("view", view.get(new float[16]));
+        shader.setMat4f("model", model.get(new float[16]));
+        shader.setMat4f("view", view.get(new float[16]));
 
 
         GL30.glBindVertexArray(VAO);
@@ -315,7 +315,7 @@ public class AppCube extends Thread{
             float length = (float) Math.sqrt(vect[0] * vect[0] + vect[1] * vect[1] + vect[2] * vect[2]);
             model.rotate((float) (GLFW.glfwGetTime() * Math.toRadians(angle)), vect[0] / length, vect[1] / length, vect[2] / length);
 
-            shader.setMat4("model", model.get(new float[16]));
+            shader.setMat4f("model", model.get(new float[16]));
             GL30.glDrawArrays(GL30.GL_TRIANGLES, 0, 36);
         }
 
@@ -324,8 +324,6 @@ public class AppCube extends Thread{
 
 
     }
-
-
 
     public static void main(String[] args) {
        new AppCube(1600, 1200, "Cube");

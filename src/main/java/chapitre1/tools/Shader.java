@@ -125,6 +125,13 @@ public class Shader {
         Shader.path = path;
     }
 
+    /**
+     * Getter du currentShader.
+     */
+    public static Shader getCurrentShader() {
+        return currentShader;
+    }
+
 
     // OUTILS d'uniformes
 
@@ -167,8 +174,11 @@ public class Shader {
     }
 
 
-    public void setMat4(String name, float[] value) {
+    public void setMat4f(String name, float[] value) {
         GL20.glUniformMatrix4fv(GL20.glGetUniformLocation(ID, name), false, value);
+    }
+    public void setMat4f(String name, org.joml.Matrix4f value) {
+        setMat4f(name, value.get(new float[16]));
     }
 
 }

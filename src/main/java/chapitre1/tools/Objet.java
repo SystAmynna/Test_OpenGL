@@ -173,6 +173,8 @@ public class Objet {
      */
     private void processMatrix(Shader shader) {
 
+        // Cette méthode a servi lors des tentatives de l'App4, le code des simples rotations n'est plus présent
+
         Matrix4f model = new Matrix4f().identity();
         Matrix4f view = new Matrix4f().identity();
         Matrix4f projection = new Matrix4f().identity();
@@ -181,9 +183,9 @@ public class Objet {
         view.translate(new Vector3f(0.0f, 0.0f, -3.0f));
         projection.perspective((float) Math.toRadians(45.0f), 1600.0f / 1200.0f, 0.1f, 100.0f);
 
-        shader.setMat4("model", model.get(new float[16]));
-        shader.setMat4("view", view.get(new float[16]));
-        shader.setMat4("projection", projection.get(new float[16]));
+        shader.setMat4f("model", model.get(new float[16]));
+        shader.setMat4f("view", view.get(new float[16]));
+        shader.setMat4f("projection", projection.get(new float[16]));
 
 
     }
