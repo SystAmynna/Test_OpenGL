@@ -1,0 +1,9 @@
+# tout ignorer
+*
+**
+
+# sauf
+!src
+!build.gradle
+!settings.gradle
+!.gitignore
