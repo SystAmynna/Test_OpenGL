@@ -102,6 +102,10 @@ protected void update() {
 
     cube.setRotation(new Vector3f(angleX, angleY, angleZ));
 
+    Vector3f p = cube.getPosition();
+    p.x = (float) Math.sin((float) GLFW.glfwGetTime()) * 2.0f;
+    cube.setPosition(p);
+
     
 }
 

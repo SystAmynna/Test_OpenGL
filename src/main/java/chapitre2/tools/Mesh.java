@@ -23,6 +23,7 @@ public class Mesh {
     private int eboId;
     private int vertexCount;
     private Texture[] textures; // Array of textures
+    private Shader shader;
 
     public Mesh(float[] vertices, int[] indices, Texture[] textures) {
         MESHES.add(this);
@@ -79,10 +80,18 @@ public class Mesh {
     public void render() {
         updateModelMatrix();
         // Assuming a shader is already in use and has a uniform "model"
-        Shader.getCurrentShader().setMat4f("model", model);
+        Shader _shader = Shader.getCurrentShader();
+        if (shader == null) {
+            shader = Shader.getCurrentShader();
+        } else {
+            shader.use();
+        }
+
+
+        shader.setMat4f("model", model);
 
         // Bind all textures
-        for (int i = 0; i < textures.length; i++) {
+        if (textures != null) for (int i = 0; i < textures.length; i++) {
             if (textures[i] != null) {
                 glActiveTexture(GL_TEXTURE0 + i);
                 textures[i].bind();
@@ -96,6 +105,17 @@ public class Mesh {
             glDrawArrays(GL_TRIANGLES, 0, vertexCount);
         }
         glBindVertexArray(0);
+
+        _shader.use();
+    }
+
+    private boolean noTexture() {
+        for (Texture texture : textures) {
+            if (texture != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void cleanup() {
@@ -135,5 +155,9 @@ public class Mesh {
 
     public Vector3f getScale() {
         return scale;
+    }
+
+    public void setShader(Shader shader) {
+        this.shader = shader;
     }
 }

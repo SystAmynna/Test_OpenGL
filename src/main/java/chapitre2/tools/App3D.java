@@ -16,8 +16,8 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public abstract class App3D extends Thread {
 
     // FENETRE
-    long window;
-    int width, height;
+    private long window;
+    protected int width, height;
     String title;
 
     // TEMPS
@@ -25,7 +25,7 @@ public abstract class App3D extends Thread {
     float lastFrame = 0.0f;
 
     // CAMERA
-    private Camera camera;
+    protected Camera camera;
     boolean outWin = false;
     boolean outWinPressed = false;
 

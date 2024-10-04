@@ -246,7 +246,7 @@ public class AppCube extends Thread{
         GL30.glEnableVertexAttribArray(1);
 
 
-        texture1 = Objet.loadTexture("wood2.png", false);
+        texture1 = Objet.loadTexture("eca.png", false);
 
         shader = new Shader("shadCube.vsh", "shadCube.fsh");
         shader.use();
