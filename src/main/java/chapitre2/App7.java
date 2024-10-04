@@ -3,6 +3,7 @@ package chapitre2;
 import chapitre1.tools.Shader;
 import chapitre2.tools.App3D;
 import chapitre2.tools.Mesh;
+import chapitre2.tools.Shader3D;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -21,12 +22,12 @@ public class App7 extends App3D {
     protected void ini() {
 
         Shader.setPath("src/main/resources/chapitre2/shaders/");
-        lightShader = new Shader("vertex/shad2.1.vsh", "fragment/shad2.2.fsh");
+        lightShader = new Shader3D("vertex/shad2.1.vsh", "fragment/shad2.2.fsh");
         lightShader.use();
         lightShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
         lightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-        light = new Shader("vertex/shad2.1.vsh", "fragment/lightSource.fsh");
+        light = new Shader3D("vertex/shad2.1.vsh", "fragment/lightSource.fsh");
 
         // Définir les vertices et indices pour un cube avec couleurs et textures
         float[] vertices = {

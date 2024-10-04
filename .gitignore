@@ -3,7 +3,7 @@
 **
 
 # sauf
-!src
+!src/**
 !build.gradle
 !settings.gradle
 !.gitignore
