@@ -11,8 +11,8 @@ public class App7 extends App3D {
 
     Mesh cube, lightCube;
 
-    Shader lightShader;
-    Shader light;
+    Shader3D lightShader;
+    Shader3D light;
 
     public App7(String title, int width, int height) {
         super(title, width, height);
@@ -22,12 +22,6 @@ public class App7 extends App3D {
     protected void ini() {
 
         Shader.setPath("src/main/resources/chapitre2/shaders/");
-        lightShader = new Shader3D("vertex/shad2.1.vsh", "fragment/shad2.2.fsh");
-        lightShader.use();
-        lightShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-        lightShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
-
-        light = new Shader3D("vertex/shad2.1.vsh", "fragment/lightSource.fsh");
 
         // Définir les vertices et indices pour un cube avec couleurs et textures
         float[] vertices = {
@@ -71,14 +65,25 @@ public class App7 extends App3D {
                 16, 17, 18, 18, 19, 16, // Top face
                 20, 21, 22, 22, 23, 20  // Bottom face
         };
-        cube = new Mesh(vertices, indices, null);
-        cube.setPosition(new Vector3f(0f, 0f, 0f));
-        cube.setShader(lightShader);
 
-        lightCube = new Mesh(vertices, indices, null);
+        // Création des shaders
+        lightShader = new Shader3D("vertex/shad2.1.vsh", "fragment/shad2.2.fsh");
+        light = new Shader3D("vertex/shad2.1.vsh", "fragment/lightSource.fsh");
+
+        // création des Mesh
+        cube = new Mesh(vertices, indices, null, lightShader);
+        lightCube = new Mesh(vertices, indices, null, light);
+
+        // envoie des données uniformes
+        cube.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));
+        cube.addUniform("lightColor", new Vector3f(1.0f, 1.0f, 1.0f));
+
+        // transformation du cube
+        cube.setPosition(new Vector3f(0f, 0f, 0f));
+
+        // transformation de la source de lumière
         lightCube.setPosition(new Vector3f(1.2f, 1.0f, 2.0f));
         lightCube.setScale(new Vector3f(0.2f, 0.2f, 0.2f));
-        lightCube.setShader(light);
 
 
     }
@@ -90,6 +95,7 @@ public class App7 extends App3D {
 
     @Override
     protected void update() {
+        /*
         Matrix4f model = new Matrix4f().translate(lightCube.getPosition());
         Matrix4f view = camera.getViewMatrix();
         Matrix4f projection = new Matrix4f().perspective((float) Math.toRadians(camera.getFov()), (float) width / (float) height, 0.1f, 100.0f);
@@ -99,6 +105,8 @@ public class App7 extends App3D {
         light.setMat4f("view", view);
         light.setMat4f("projection", projection);
         lightShader.use();
+
+         */
 
     }
 

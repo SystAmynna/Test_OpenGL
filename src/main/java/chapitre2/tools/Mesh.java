@@ -99,17 +99,19 @@ public class Mesh {
             if (value instanceof Matrix4f) shader.setMat4f(key, (Matrix4f) value);
         }
 
-        // Avant de lier les textures
-        shader.setInt("numTextures", textures.length);
+        if (textures != null) {
 
-        // Lier et activer les textures
-        for (int i = 0; i < textures.length; i++) {
-            if (textures[i] != null) {
-                glActiveTexture(GL_TEXTURE0 + i);
-                textures[i].bind();
-                shader.setInt("textures[" + i + "]", i);
+            // Lier et activer les textures
+            for (int i = 0; i < textures.length; i++) {
+                if (textures[i] != null) {
+                    glActiveTexture(GL_TEXTURE0 + i);
+                    textures[i].bind();
+                    shader.setInt("textures[" + i + "]", i);
+                }
             }
         }
+
+
 
         // Dessiner le maillage
         glBindVertexArray(vaoId);
