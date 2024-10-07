@@ -4,6 +4,7 @@ import chapitre1.tools.Objet;
 import chapitre1.tools.Shader;
 import chapitre2.tools.App3D;
 import chapitre2.tools.Mesh;
+import chapitre2.tools.Shader3D;
 import chapitre2.tools.Texture;
 import org.joml.Random;
 import org.joml.Vector3f;
@@ -22,7 +23,7 @@ public class App6 extends App3D {
     protected void ini() {
         Shader.setPath("src/main/resources/chapitre2/shaders/");
         // Charger et utiliser le shader
-        Shader shader = new Shader("vertex/shad2.1.vsh", "fragment/shad2.1.fsh");
+        Shader3D shader = new Shader3D("vertex/shad2.1.vsh", "fragment/shad2.1.fsh");
         shader.use();
 
         // Charger les textures par défaut
@@ -84,7 +85,7 @@ public class App6 extends App3D {
         };
 
         // Créer le mesh pour le cube avec le tableau de textures
-        cube = new Mesh(vertices, indices, textures);
+        cube = new Mesh(vertices, indices, textures, shader);
         cube.setPosition(new Vector3f(0.0f, 0.0f, 0.0f));
 
     }
