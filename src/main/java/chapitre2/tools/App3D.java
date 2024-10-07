@@ -99,10 +99,7 @@ public abstract class App3D extends Thread {
         if (Shader.SHADERS.isEmpty()) throw new RuntimeException("Aucun shader n'a été chargé");
         if (Shader3D.SHADERS.isEmpty()) System.err.println("[WARN] (App3D) : Aucun shader 3D n'a été chargé");
         // shader
-        Shader shader;
-        if (Shader.getCurrentShader() == null) shader = Shader.SHADERS.get(0);
-        else shader = Shader.getCurrentShader();
-        shader.use();
+
 
         // GESTION CAMERA -------------------------------------------------------
 
@@ -114,7 +111,7 @@ public abstract class App3D extends Thread {
 
         // matrice de projection
         Matrix4f projection = new Matrix4f().perspective((float) Math.toRadians(45.0f), (float) width / (float) height, 0.1f, 100.0f);
-        shader.setMat4f("projection", projection);
+        Shader3D.setProjectionMatrix(projection);
         // Callback du scroll de la souris
         GLFW.glfwSetScrollCallback(window, (window, xoffset, yoffset) -> {
             camera.processMouseScroll((float) yoffset);
@@ -125,7 +122,7 @@ public abstract class App3D extends Thread {
 
         // matrice de vue
         Matrix4f view = camera.getViewMatrix();
-        shader.setMat4f("view", view);
+        Shader3D.setViewMatrix(view);
         // Callback du mouvement de la souris
         GLFW.glfwSetCursorPosCallback(window, (window, xpos, ypos) -> {
             if (outWin) {
