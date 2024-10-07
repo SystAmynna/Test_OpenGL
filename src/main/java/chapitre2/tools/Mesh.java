@@ -5,6 +5,8 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -23,15 +25,18 @@ public class Mesh {
     private int eboId;
     private int vertexCount;
     private Texture[] textures; // Array of textures
-    private Shader shader;
+    private Shader3D shader;
 
-    public Mesh(float[] vertices, int[] indices, Texture[] textures) {
+    private final HashMap<String, Object> UNIFORMS = new HashMap<>();
+
+    public Mesh(float[] vertices, int[] indices, Texture[] textures, Shader3D shader) {
         MESHES.add(this);
         this.position = new Vector3f(0.0f, 0.0f, 0.0f);
         this.rotation = new Vector3f(0.0f, 0.0f, 0.0f);
         this.scale = new Vector3f(1.0f, 1.0f, 1.0f);
         this.model = new Matrix4f();
         this.textures = textures; // Initialize the texture array
+        this.shader = shader;
         initBuffers(vertices, indices);
         updateModelMatrix();
     }
@@ -79,25 +84,34 @@ public class Mesh {
 
     public void render() {
         updateModelMatrix();
-        // Assuming a shader is already in use and has a uniform "model"
-        Shader _shader = Shader.getCurrentShader();
-        if (shader == null) {
-            shader = Shader.getCurrentShader();
-        } else {
-            shader.use();
-        }
 
-
+        if (shader == null) return;
+        shader.use();
         shader.setMat4f("model", model);
 
-        // Bind all textures
-        if (textures != null) for (int i = 0; i < textures.length; i++) {
+        // Charger les uniformes stockés
+        for (Map.Entry<String, Object> entry : UNIFORMS.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            if (value instanceof Integer) shader.setInt(key, (int) value);
+            if (value instanceof Float) shader.setFloat(key, (float) value);
+            if (value instanceof Vector3f) shader.setVec3(key, (Vector3f) value);
+            if (value instanceof Matrix4f) shader.setMat4f(key, (Matrix4f) value);
+        }
+
+        // Avant de lier les textures
+        shader.setInt("numTextures", textures.length);
+
+        // Lier et activer les textures
+        for (int i = 0; i < textures.length; i++) {
             if (textures[i] != null) {
                 glActiveTexture(GL_TEXTURE0 + i);
                 textures[i].bind();
+                shader.setInt("textures[" + i + "]", i);
             }
         }
 
+        // Dessiner le maillage
         glBindVertexArray(vaoId);
         if (eboId != 0) {
             glDrawElements(GL_TRIANGLES, vertexCount, GL_UNSIGNED_INT, 0);
@@ -105,8 +119,6 @@ public class Mesh {
             glDrawArrays(GL_TRIANGLES, 0, vertexCount);
         }
         glBindVertexArray(0);
-
-        _shader.use();
     }
 
     private boolean noTexture() {
@@ -157,7 +169,11 @@ public class Mesh {
         return scale;
     }
 
-    public void setShader(Shader shader) {
+    public void setShader(Shader3D shader) {
         this.shader = shader;
+    }
+
+    public void addUniform(String name, Object value) {
+        UNIFORMS.put(name, value);
     }
 }

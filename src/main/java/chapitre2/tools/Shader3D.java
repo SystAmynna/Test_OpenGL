@@ -31,6 +31,9 @@ public class Shader3D extends Shader {
      */
     private static String projection = "projection";
 
+    private static Matrix4f viewMatrix;
+    private static Matrix4f projectionMatrix;
+
     // CONSTRUCTEUR
 
     /**
@@ -46,26 +49,33 @@ public class Shader3D extends Shader {
 
     // METHODES
 
+    @Override
+    public void use() {
+        super.use();
+        sendViewMatrix(viewMatrix);
+        sendProjectionMatrix(projectionMatrix);
+    }
+
     /**
      * Mettre à jour la matrice de model.
      *
      * @param matrix
      */
-    public static void setModelMatrix(Matrix4f matrix) {
+    public static void sendModelMatrix(Matrix4f matrix) {
         shad3DSetMat4f(model, matrix);
     }
     /**
      * Mettre à jour la matrice de view.
      * @param matrix
      */
-    public static void setViewMatrix(Matrix4f matrix) {
+    public static void sendViewMatrix(Matrix4f matrix) {
         shad3DSetMat4f(view, matrix);
     }
     /**
      * Mettre à jour la matrice de projection.
      * @param matrix
      */
-    public static void setProjectionMatrix(Matrix4f matrix) {
+    public static void sendProjectionMatrix(Matrix4f matrix) {
         shad3DSetMat4f(projection, matrix);
     }
 
@@ -119,6 +129,13 @@ public class Shader3D extends Shader {
      */
     public static void setProjection(String projection) {
         Shader3D.projection = projection;
+    }
+
+    public static void setViewMatrix(Matrix4f viewMatrix) {
+        Shader3D.viewMatrix = viewMatrix;
+    }
+    public static void setProjectionMatrix(Matrix4f projectionMatrix) {
+        Shader3D.projectionMatrix = projectionMatrix;
     }
 
 

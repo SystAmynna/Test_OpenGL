@@ -98,7 +98,6 @@ public abstract class App3D extends Thread {
         // verification de l'initialisation
         if (Shader.SHADERS.isEmpty()) throw new RuntimeException("Aucun shader n'a été chargé");
         if (Shader3D.SHADERS.isEmpty()) System.err.println("[WARN] (App3D) : Aucun shader 3D n'a été chargé");
-        // shader
 
 
         // GESTION CAMERA -------------------------------------------------------
@@ -116,8 +115,8 @@ public abstract class App3D extends Thread {
         GLFW.glfwSetScrollCallback(window, (window, xoffset, yoffset) -> {
             camera.processMouseScroll((float) yoffset);
             Matrix4f p = new Matrix4f().perspective((float) Math.toRadians(camera.getFov()), (float) width / (float) height, 0.1f, 100.0f);
-            Shader.getCurrentShader().setMat4f("projection", p);
-            //Shader3D.setProjectionMatrix(p);
+            //Shader.getCurrentShader().setMat4f("projection", p);
+            Shader3D.setProjectionMatrix(p);
         });
 
         // matrice de vue
@@ -131,7 +130,8 @@ public abstract class App3D extends Thread {
             }
             camera.processMouseMovement((float) xpos, (float) ypos);
             Matrix4f v = camera.getViewMatrix();
-            Shader.getCurrentShader().setMat4f("view", v);
+            //Shader.getCurrentShader().setMat4f("view", v);
+            Shader3D.setViewMatrix(v);
         });
 
         // -----------------------------------------------------------------------
@@ -160,7 +160,8 @@ public abstract class App3D extends Thread {
             processInput();
 
             // mise à jour de la matrice de vue
-            Shader.getCurrentShader().setMat4f("view", camera.getViewMatrix());
+            //Shader.getCurrentShader().setMat4f("view", camera.getViewMatrix());
+            Shader3D.sendViewMatrix(camera.getViewMatrix());
 
             // update des objets
             update();

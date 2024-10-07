@@ -172,6 +172,9 @@ public class Shader {
     public void setVec3(String name, float x, float y, float z) {
         GL20.glUniform3f(GL20.glGetUniformLocation(ID, name), x, y, z);
     }
+    public void setVec3(String name, org.joml.Vector3f value) {
+        setVec3(name, value.x, value.y, value.z);
+    }
 
 
     public void setMat4f(String name, float[] value) {
@@ -179,6 +182,10 @@ public class Shader {
     }
     public void setMat4f(String name, org.joml.Matrix4f value) {
         setMat4f(name, value.get(new float[16]));
+    }
+
+    public int getID() {
+        return ID;
     }
 
 }
