@@ -169,24 +169,19 @@ public class Mesh {
 
         // index de l'attribut
         int index = 0;
+        long pointer = 0;
         // parcours des types de données du maillage
         for (DataType dataType: DATA_TYPES) {
             switch (dataType) {
-                case POSITION:
-                    glVertexAttribPointer(index, 3, GL_FLOAT, false, stride, 0);
+                case POSITION, COLOR, NORMAL:
+                    glVertexAttribPointer(index, 3, GL_FLOAT, false, stride, pointer * Float.BYTES);
                     glEnableVertexAttribArray(index);
-                    break;
-                case COLOR:
-                    glVertexAttribPointer(index, 3, GL_FLOAT, false, stride, 3 * Float.BYTES);
-                    glEnableVertexAttribArray(index);
+                    pointer += 3;
                     break;
                 case TEXTURE:
-                    glVertexAttribPointer(index, 2, GL_FLOAT, false, stride, 6 * Float.BYTES);
+                    glVertexAttribPointer(index, 2, GL_FLOAT, false, stride, pointer * Float.BYTES);
                     glEnableVertexAttribArray(index);
-                    break;
-                case NORMAL:
-                    glVertexAttribPointer(index, 3, GL_FLOAT, false, stride, 8 * Float.BYTES);
-                    glEnableVertexAttribArray(index);
+                    pointer += 2;
                     break;
             }
             index++;
