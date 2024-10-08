@@ -27,8 +27,6 @@ public class Mesh {
     private Texture[] textures; // Array of textures
     private Shader3D shader;
 
-    private final HashMap<String, Object> UNIFORMS = new HashMap<>();
-
     public Mesh(float[] vertices, int[] indices, Texture[] textures, Shader3D shader) {
         MESHES.add(this);
         this.position = new Vector3f(0.0f, 0.0f, 0.0f);
@@ -89,15 +87,6 @@ public class Mesh {
         shader.use();
         shader.setMat4f("model", model);
 
-        // Charger les uniformes stockés
-        for (Map.Entry<String, Object> entry : UNIFORMS.entrySet()) {
-            String key = entry.getKey();
-            Object value = entry.getValue();
-            if (value instanceof Integer) shader.setInt(key, (int) value);
-            if (value instanceof Float) shader.setFloat(key, (float) value);
-            if (value instanceof Vector3f) shader.setVec3(key, (Vector3f) value);
-            if (value instanceof Matrix4f) shader.setMat4f(key, (Matrix4f) value);
-        }
 
         if (textures != null) {
 
@@ -173,9 +162,5 @@ public class Mesh {
 
     public void setShader(Shader3D shader) {
         this.shader = shader;
-    }
-
-    public void addUniform(String name, Object value) {
-        UNIFORMS.put(name, value);
     }
 }

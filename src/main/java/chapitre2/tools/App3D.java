@@ -160,8 +160,7 @@ public abstract class App3D extends Thread {
             processInput();
 
             // mise à jour de la matrice de vue
-            //Shader.getCurrentShader().setMat4f("view", camera.getViewMatrix());
-            Shader3D.sendViewMatrix(camera.getViewMatrix());
+            Shader3D.globalSetMat4f(Shader3D.view, camera.getViewMatrix());
 
             // update des objets
             update();

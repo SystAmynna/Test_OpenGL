@@ -75,8 +75,8 @@ public class App7 extends App3D {
         lightCube = new Mesh(vertices, indices, null, light);
 
         // envoie des données uniformes
-        cube.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));
-        cube.addUniform("lightColor", new Vector3f(1.0f, 1.0f, 1.0f));
+        lightShader.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));
+        lightShader.addUniform("lightColor", new Vector3f(1.0f, 1.0f, 1.0f));
 
         // transformation du cube
         cube.setPosition(new Vector3f(0f, 0f, 0f));
