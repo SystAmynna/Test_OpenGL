@@ -71,8 +71,8 @@ public class App7 extends App3D {
         light = new Shader3D("vertex/shad2.1.vsh", "fragment/lightSource.fsh");
 
         // création des Mesh
-        cube = new Mesh(vertices, indices, null, lightShader);
-        lightCube = new Mesh(vertices, indices, null, light);
+        cube = new Mesh(vertices, indices, Mesh.DT_POSITION_COLOR_TEXTURE, null, lightShader);
+        lightCube = new Mesh(vertices, indices, Mesh.DT_POSITION_COLOR_TEXTURE, null, light);
 
         // envoie des données uniformes
         lightShader.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));

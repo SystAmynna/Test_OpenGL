@@ -69,7 +69,7 @@ public class App6 extends App3D {
             20, 21, 22, 22, 23, 20  // Bottom face
         };
 
-        cube = new Mesh(vertices, indices, textures, shader);
+        cube = new Mesh(vertices, indices, Mesh.DT_POSITION_COLOR_TEXTURE, textures, shader);
         cube.setPosition(new Vector3f(0.0f, 0.0f, 0.0f));
 
 
