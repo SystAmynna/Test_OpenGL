@@ -16,7 +16,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 public abstract class App3D extends Thread {
 
     // FENETRE
-    private long window;
+    protected long window;
     protected int width, height;
     String title;
 
@@ -92,13 +92,6 @@ public abstract class App3D extends Thread {
         // Profondeur (éviter le chevauchement des éléments)
         GL11.glEnable(GL11.GL_DEPTH_TEST); // Activer le test de profondeur
 
-        // Initialisation spécifique à l'app
-        ini();
-
-        // verification de l'initialisation
-        if (Shader.SHADERS.isEmpty()) throw new RuntimeException("Aucun shader n'a été chargé");
-        if (Shader3D.SHADERS.isEmpty()) System.err.println("[WARN] (App3D) : Aucun shader 3D n'a été chargé");
-
 
         // GESTION CAMERA -------------------------------------------------------
 
@@ -133,6 +126,12 @@ public abstract class App3D extends Thread {
             //Shader.getCurrentShader().setMat4f("view", v);
             Shader3D.setViewMatrix(v);
         });
+
+        // Initialisation spécifique à l'app
+        ini();
+        // verification de l'initialisation
+        if (Shader.SHADERS.isEmpty()) throw new RuntimeException("Aucun shader n'a été chargé");
+        if (Shader3D.SHADERS.isEmpty()) System.err.println("[WARN] (App3D) : Aucun shader 3D n'a été chargé");
 
         // -----------------------------------------------------------------------
 
