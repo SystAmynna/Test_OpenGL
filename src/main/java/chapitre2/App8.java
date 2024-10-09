@@ -11,8 +11,10 @@ import org.lwjgl.opengl.GL11;
 
 public class App8 extends App3D {
 
-    Mesh cube, light;
+    Mesh cube, cube2, light;
     Shader3D shader, lightShader;
+    boolean texture = true;
+    boolean textPressed = false;
 
 
     public App8(String title, int width, int height) {
@@ -69,25 +71,34 @@ public class App8 extends App3D {
         Texture[] textures = new Texture[16];
         textures[0] = new Texture("src/main/resources/chapitre2/textures/eyeU.png");
 
+        Texture[] textures2 = new Texture[16];
+        textures2[0] = new Texture("src/main/resources/chapitre2/textures/water.png");
+
         Vector3f lightPos = new Vector3f(1.2f, 1.0f, 2.0f);
         Vector3f lightColor = new Vector3f(1.0f, 1.0f, 1.0f);
 
         shader = new Shader3D("vertex/shad8.vsh", "fragment/shad8.fsh");
         lightShader = new Shader3D("vertex/light.vsh", "fragment/lightSource.fsh");
 
-        shader.addUniform("objectColor", new Vector3f(1.0f, 1.0f, 1.0f));
+        shader.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));
         shader.addUniform("lightColor", lightColor);
         shader.addUniform("lightPos", lightPos);
+        shader.addUniform("viewPos", camera.getPosition());
+        shader.addUniform("useTexture", texture);
 
         lightShader.addUniform("lightColor", lightColor);
 
         Mesh.DataType[] dataTypes = {Mesh.DataType.POSITION, Mesh.DataType.NORMAL, Mesh.DataType.TEXTURE};
 
         cube = new Mesh(vertices, indices, dataTypes, textures, shader);
+        cube2 = new Mesh(vertices, indices, dataTypes, textures2, shader);
         light = new Mesh(vertices, indices, dataTypes, null, lightShader);
 
         // transformation du cube
         cube.setPosition(new Vector3f(0f, 0f, 0f));
+
+        cube2.setPosition(new Vector3f(0f, 0f, 0f));
+        cube2.setScale(new Vector3f(0.5f, 0.5f, 0.5f));
 
         // transformation de la source de lumière
         light.setPosition(lightPos);
@@ -98,7 +109,16 @@ public class App8 extends App3D {
     }
 
     @Override
-    protected void processInput() {}
+    protected void processInput() {
+        if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_X) == GLFW.GLFW_PRESS && !textPressed) {
+            texture = !texture;
+            textPressed = true;
+            System.out.println(texture);
+        } else if (GLFW.glfwGetKey(window, GLFW.GLFW_KEY_X) == GLFW.GLFW_RELEASE) {
+            textPressed = false;
+        }
+
+    }
 
     @Override
     protected void update() {
@@ -109,14 +129,20 @@ public class App8 extends App3D {
         float x = (float) Math.sin(time) * 2.0f;
         float z = (float) Math.cos(time) * 2.0f;
         float y = (float) Math.sin(time) * 1.2f;
+
         light.setPosition(new Vector3f(x, y, z));
+
+        cube2.setPosition(new Vector3f(x*1.3f, -z*1.3f, y*1.3f));
+
         shader.addUniform("lightPos", light.getPosition());
+        shader.addUniform("viewPos", camera.getPosition());
+        shader.addUniform("useTexture", texture ? 1 : 0);
 
 
 
     }
 
     public static void main(String[] args) {
-        new App8("App8", 1600, 1200);
+        new App8("App8", 800, 600);
     }
 }
