@@ -4,6 +4,7 @@ import chapitre1.tools.Shader;
 import chapitre2.tools.App3D;
 import chapitre2.tools.Mesh;
 import chapitre2.tools.Shader3D;
+import chapitre2.tools.Texture;
 import org.joml.Vector3f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -26,35 +27,35 @@ public class App8 extends App3D {
         float[] vertices = {
                 // Positions         // Normales
                 // Front face
-                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-                -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+                -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 0.0f,
+                 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 0.0f,
+                 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  0.0f, 1.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,  1.0f, 1.0f,
                 // Back face
-                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-                 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-                 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f, 0.0f,
+                 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 0.0f,
+                 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  1.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,  0.0f, 1.0f,
                 // Left face
-                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-                -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+                -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
+                -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
                 // Right face
-                 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-                 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-                 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-                 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+                 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 0.0f,
+                 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,  1.0f, 1.0f,
+                 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 1.0f,
+                 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,  0.0f, 0.0f,
                 // Top face
-                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-                 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-                 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-                -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+                -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 0.0f,
+                 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 0.0f,
+                 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  1.0f, 1.0f,
+                -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,  0.0f, 1.0f,
                 // Bottom face
-                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-                 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-                 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-                -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f
+                -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 0.0f,
+                 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 0.0f,
+                 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  1.0f, 1.0f,
+                -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,  0.0f, 1.0f
         };
         int[] indices = {
                 0, 1, 2, 2, 3, 0, // Front face
@@ -65,17 +66,25 @@ public class App8 extends App3D {
                 20, 21, 22, 22, 23, 20  // Bottom face
         };
 
+        Texture[] textures = new Texture[16];
+        textures[0] = new Texture("src/main/resources/chapitre2/textures/eyeU.png");
+
         Vector3f lightPos = new Vector3f(1.2f, 1.0f, 2.0f);
+        Vector3f lightColor = new Vector3f(1.0f, 1.0f, 1.0f);
 
         shader = new Shader3D("vertex/shad8.vsh", "fragment/shad8.fsh");
         lightShader = new Shader3D("vertex/light.vsh", "fragment/lightSource.fsh");
 
-        shader.addUniform("objectColor", new Vector3f(1.0f, 0.5f, 0.31f));
-        shader.addUniform("lightColor", new Vector3f(1.0f, 1.0f, 1.0f));
+        shader.addUniform("objectColor", new Vector3f(1.0f, 1.0f, 1.0f));
+        shader.addUniform("lightColor", lightColor);
         shader.addUniform("lightPos", lightPos);
 
-        cube = new Mesh(vertices, indices, Mesh.DT_POSITION_NORMAL, null, shader);
-        light = new Mesh(vertices, indices, Mesh.DT_POSITION_NORMAL, null, lightShader);
+        lightShader.addUniform("lightColor", lightColor);
+
+        Mesh.DataType[] dataTypes = {Mesh.DataType.POSITION, Mesh.DataType.NORMAL, Mesh.DataType.TEXTURE};
+
+        cube = new Mesh(vertices, indices, dataTypes, textures, shader);
+        light = new Mesh(vertices, indices, dataTypes, null, lightShader);
 
         // transformation du cube
         cube.setPosition(new Vector3f(0f, 0f, 0f));
