@@ -138,4 +138,8 @@ public class Camera {
         right = new Vector3f(front).cross(worldUp).normalize();
         up = new Vector3f(right).cross(front).normalize();
     }
+
+    public Vector3f getPosition() {
+        return position;
+    }
 }
